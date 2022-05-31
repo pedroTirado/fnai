@@ -1,0 +1,7 @@
+CC=g++
+CFLAGS=-I
+
+build: fnai.o
+	$(CC) -o fnai fnai.o
+rebuild:
+clean:
