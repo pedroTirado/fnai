@@ -1,5 +1,5 @@
-//#include <iostream>
-//#include <string>
+#include <iostream>
+#include <string>
 #include <SFML/Graphics.hpp>
 
 //int main()
@@ -27,11 +27,17 @@ int main()
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
-	sf::Image ianImg;
-	ianImg.loadFromFile("images/sprites/ian/ian_walking0_scaled.png");
+	std::string imgPath_ian = "images/sprites/ian/";
+
+	sf::Image ianImgStanding;
+	ianImgStanding.loadFromFile(imgPath_ian + "ian_standing_scaled.png");
+	sf::Image ianImgWalking0;
+	ianImgWalking0.loadFromFile(imgPath_ian + "ian_walking0_scaled.png");
+	sf::Image ianImgWalking1;
+	ianImgWalking1.loadFromFile(imgPath_ian + "ian_walking1_scaled.png");
 
 	sf::Texture ianTxtr;
-	ianTxtr.loadFromImage(ianImg);
+	ianTxtr.loadFromImage(ianImgStanding);
 
 	sf::Sprite ianSprite;
 	ianSprite.setTexture(ianTxtr);
@@ -43,7 +49,26 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				ianSprite.move(-5.f, 0.f);
+				//ianTxtr.loadFromImage(ianImgWalking1);
+				ianTxtr.update(ianImgWalking1);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				ianSprite.move(5.f, 0.f);
+				//ianTxtr.loadFromImage(ianImgWalking0);
+				ianTxtr.update(ianImgWalking0);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				ianSprite.move(0.f, -5.f);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+				ianSprite.move(0.f, 5.f);
+			}
 		}
+
+		//ianTxtr.loadFromImage(ianImgStanding);
 
 		window.clear();
 		window.draw(ianSprite);
