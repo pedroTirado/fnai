@@ -21,9 +21,20 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	system("dir"); // prints current working dir
+	
+	sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
+
+	sf::Image ianImg;
+	ianImg.loadFromFile("images/sprites/ian/ian_walking0_scaled.png");
+
+	sf::Texture ianTxtr;
+	ianTxtr.loadFromImage(ianImg);
+
+	sf::Sprite ianSprite;
+	ianSprite.setTexture(ianTxtr);
 
 	while (window.isOpen())
 	{
@@ -35,7 +46,7 @@ int main()
 		}
 
 		window.clear();
-		window.draw(shape);
+		window.draw(ianSprite);
 		window.display();
 	}
 
