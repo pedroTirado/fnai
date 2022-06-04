@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 //int main()
@@ -28,6 +29,7 @@ int main()
 	shape.setFillColor(sf::Color::Green);
 
 	std::string imgPath_ian = "images/sprites/ian/";
+	std::string imgPath_barricade = "images/";
 
 	sf::Image ianImgStanding;
 	ianImgStanding.loadFromFile(imgPath_ian + "ian_standing_scaled.png");
@@ -36,11 +38,36 @@ int main()
 	sf::Image ianImgWalking1;
 	ianImgWalking1.loadFromFile(imgPath_ian + "ian_walking1_scaled.png");
 
+	sf::Image barricade0_img;
+	barricade0_img.loadFromFile(imgPath_barricade + "barricade0_scaled.png");
+	sf::Image barricade1_img;
+	barricade1_img.loadFromFile(imgPath_barricade + "barricade1_scaled.png");
+	sf::Texture barricade0_txtr;
+	barricade0_txtr.loadFromImage(barricade0_img);
+	sf::Texture barricade1_txtr;
+	barricade1_txtr.loadFromImage(barricade1_img);
+
+	std::vector<sf::Sprite> barricadesX(10);
+	std::vector<sf::Sprite> barricadesY(10);
+
+	for (size_t i = 0; i < barricadesX.size(); i++)
+	{
+		if (i % 2 == 0) {
+			barricadesX.at(i).setTexture(barricade0_txtr);
+			barricadesY.at(i).setTexture(barricade0_txtr);
+		}
+		else {
+			barricadesX.at(i).setTexture(barricade1_txtr);
+			barricadesY.at(i).setTexture(barricade1_txtr);
+		}
+	}
+
 	sf::Texture ianTxtr;
 	ianTxtr.loadFromImage(ianImgStanding);
 
 	sf::Sprite ianSprite;
 	ianSprite.setTexture(ianTxtr);
+	ianSprite.setPosition(sf::Vector2f((float)window.getSize().x/2, (float)window.getSize().y/2)); // absolute position
 
 	while (window.isOpen())
 	{
@@ -51,20 +78,20 @@ int main()
 				window.close();
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				ianSprite.move(-5.f, 0.f);
+				ianSprite.move(-10.f, 0.f);
 				//ianTxtr.loadFromImage(ianImgWalking1);
 				ianTxtr.update(ianImgWalking1);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				ianSprite.move(5.f, 0.f);
+				ianSprite.move(10.f, 0.f);
 				//ianTxtr.loadFromImage(ianImgWalking0);
 				ianTxtr.update(ianImgWalking0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				ianSprite.move(0.f, -5.f);
+				ianSprite.move(0.f, -10.f);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				ianSprite.move(0.f, 5.f);
+				ianSprite.move(0.f, 10.f);
 			}
 		}
 
