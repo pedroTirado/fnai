@@ -50,6 +50,11 @@ int main()
 	std::vector<sf::Sprite> barricadesX(10);
 	std::vector<sf::Sprite> barricadesY(10);
 
+	float centerX = (float)window.getSize().x / 2;
+	float centerY = (float)window.getSize().y / 2;
+	float offsetX = 0.0;
+	float offsetY = 0.0;
+
 	for (size_t i = 0; i < barricadesX.size(); i++)
 	{
 		if (i % 2 == 0) {
@@ -60,6 +65,10 @@ int main()
 			barricadesX.at(i).setTexture(barricade1_txtr);
 			barricadesY.at(i).setTexture(barricade1_txtr);
 		}
+
+		barricadesY.at(i).setPosition(centerX - 500, centerY - offsetY);
+
+		offsetY += 100;
 	}
 
 	sf::Texture ianTxtr;
@@ -99,6 +108,9 @@ int main()
 
 		window.clear();
 		window.draw(ianSprite);
+		for (sf::Sprite s : barricadesY) {
+			window.draw(s);
+		}
 		window.display();
 	}
 
