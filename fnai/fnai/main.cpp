@@ -25,8 +25,11 @@ int main()
 	system("dir"); // prints current working dir
 	
 	sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
+	sf::RectangleShape rect0();
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
+
+	
 
 	std::string imgPath_ian = "images/sprites/ian/";
 	std::string imgPath_barricade = "images/";
@@ -68,6 +71,9 @@ int main()
 
 		barricadesY.at(i).setPosition(centerX - 500, centerY - offsetY);
 
+		barricadesX.at(i).setPosition(offsetX, centerY + 200);
+
+		offsetX += 150;
 		offsetY += 100;
 	}
 
@@ -109,6 +115,9 @@ int main()
 		window.clear();
 		window.draw(ianSprite);
 		for (sf::Sprite s : barricadesY) {
+			window.draw(s);
+		}
+		for (sf::Sprite s : barricadesX) {
 			window.draw(s);
 		}
 		window.display();
