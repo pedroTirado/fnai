@@ -29,10 +29,14 @@ int main()
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
-	
+	float centerX = (float)window.getSize().x / 2;
+	float centerY = (float)window.getSize().y / 2;
+	float offsetX = 0.0;
+	float offsetY = 0.0;
 
 	std::string imgPath_ian = "images/sprites/ian/";
 	std::string imgPath_barricade = "images/";
+	std::string imgPath_doors = "images/doors/";
 
 	sf::Image ianImgStanding;
 	ianImgStanding.loadFromFile(imgPath_ian + "ian_standing_scaled.png");
@@ -40,6 +44,13 @@ int main()
 	ianImgWalking0.loadFromFile(imgPath_ian + "ian_walking0_scaled.png");
 	sf::Image ianImgWalking1;
 	ianImgWalking1.loadFromFile(imgPath_ian + "ian_walking1_scaled.png");
+
+	sf::Texture ianTxtr;
+	ianTxtr.loadFromImage(ianImgStanding);
+
+	sf::Sprite ianSprite;
+	ianSprite.setTexture(ianTxtr);
+	ianSprite.setPosition(sf::Vector2f((float)window.getSize().x / 2, (float)window.getSize().y / 2)); // absolute position
 
 	sf::Image barricade0_img;
 	barricade0_img.loadFromFile(imgPath_barricade + "barricade0_scaled.png");
@@ -52,37 +63,37 @@ int main()
 
 	std::vector<sf::Sprite> barricadesX(10);
 	std::vector<sf::Sprite> barricadesY(10);
+	std::vector<sf::Sprite> barricadesY1(10);
 
-	float centerX = (float)window.getSize().x / 2;
-	float centerY = (float)window.getSize().y / 2;
-	float offsetX = 0.0;
-	float offsetY = 0.0;
+	sf::Image doorAqua_img;
+	doorAqua_img.loadFromFile(imgPath_doors + "aquaDoor.png");
+	sf::Texture doorAqua_txtr;
+	doorAqua_txtr.loadFromImage(doorAqua_img);
+	sf::Sprite doorAqua_sprite;
+	doorAqua_sprite.setTexture(doorAqua_txtr);
+	doorAqua_sprite.setPosition(centerX - 400, centerY - 530);
 
 	for (size_t i = 0; i < barricadesX.size(); i++)
 	{
 		if (i % 2 == 0) {
 			barricadesX.at(i).setTexture(barricade0_txtr);
 			barricadesY.at(i).setTexture(barricade0_txtr);
+			barricadesY1.at(i).setTexture(barricade0_txtr);
 		}
 		else {
 			barricadesX.at(i).setTexture(barricade1_txtr);
 			barricadesY.at(i).setTexture(barricade1_txtr);
+			barricadesY1.at(i).setTexture(barricade1_txtr);
 		}
 
 		barricadesY.at(i).setPosition(centerX - 500, centerY - offsetY);
+		barricadesY1.at(i).setPosition(centerX - 150, centerY - offsetY);
 
 		barricadesX.at(i).setPosition(offsetX, centerY + 200);
 
 		offsetX += 150;
 		offsetY += 100;
 	}
-
-	sf::Texture ianTxtr;
-	ianTxtr.loadFromImage(ianImgStanding);
-
-	sf::Sprite ianSprite;
-	ianSprite.setTexture(ianTxtr);
-	ianSprite.setPosition(sf::Vector2f((float)window.getSize().x/2, (float)window.getSize().y/2)); // absolute position
 
 	while (window.isOpen())
 	{
@@ -110,11 +121,13 @@ int main()
 			}
 		}
 
-		//ianTxtr.loadFromImage(ianImgStanding);
-
 		window.clear();
 		window.draw(ianSprite);
+		window.draw(doorAqua_sprite);
 		for (sf::Sprite s : barricadesY) {
+			window.draw(s);
+		}
+		for (sf::Sprite s : barricadesY1) {
 			window.draw(s);
 		}
 		for (sf::Sprite s : barricadesX) {
